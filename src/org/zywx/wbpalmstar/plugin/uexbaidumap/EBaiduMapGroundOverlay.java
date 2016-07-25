@@ -1,7 +1,5 @@
 package org.zywx.wbpalmstar.plugin.uexbaidumap;
 
-import android.content.Context;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.GroundOverlay;
 
@@ -9,7 +7,7 @@ public class EBaiduMapGroundOverlay extends EBaiduMapOverlay {
 
 	private GroundOverlay groundOverlay = null;
 	
-	public EBaiduMapGroundOverlay(String id, Context context, BaiduMap baiduMap) {
+	public EBaiduMapGroundOverlay(String id, EBaiduMapBaseFragment context, BaiduMap baiduMap) {
 		super(id, context, baiduMap);
 	}
 	

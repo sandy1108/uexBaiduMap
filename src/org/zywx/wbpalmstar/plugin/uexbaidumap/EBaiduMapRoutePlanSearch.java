@@ -3,13 +3,11 @@ package org.zywx.wbpalmstar.plugin.uexbaidumap;
 import java.util.HashMap;
 
 import org.zywx.wbpalmstar.engine.universalex.EUExBase;
-import org.zywx.wbpalmstar.engine.universalex.EUExCallback;
 import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
@@ -22,6 +20,7 @@ import com.baidu.mapapi.overlayutil.TransitRouteOverlay;
 import com.baidu.mapapi.overlayutil.WalkingRouteOverlay;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
@@ -43,12 +42,15 @@ public class EBaiduMapRoutePlanSearch implements OnGetRoutePlanResultListener {
 	private HashMap<String, OverlayManager> mRoutePlanOverlays;
 	private EBaiduMapRoutePlanOptions mRoutePlanOptions;
 	private RoutePlanSearch mRoutePlanSearch = null;
-    private RouteLine mRouteLine = null; //保存路径数据的变量，供浏览节点时使用
+    @SuppressWarnings("rawtypes")
+	private RouteLine mRouteLine = null; //保存路径数据的变量，供浏览节点时使用
 	private int routeNodeIndex = -1; //路径节点索引,供浏览节点时使用
+    private EBaiduMapBaseFragment baseFragment;
 
-	public EBaiduMapRoutePlanSearch(Context context, BaiduMap baiduMap,
+	public EBaiduMapRoutePlanSearch(EBaiduMapBaseFragment context, BaiduMap baiduMap,
 			MapView mapView) {
-		mContext = context;
+        baseFragment = context;
+		mContext = context.getActivity();
 		mBaiduMap = baiduMap;
 		mMapView = mapView;
 		mRoutePlanOverlays = new HashMap<String, OverlayManager>();
@@ -239,13 +241,13 @@ public class EBaiduMapRoutePlanSearch implements OnGetRoutePlanResultListener {
         String nodeTitle = null;
         Object step = mRouteLine.getAllStep().get(routeNodeIndex);
         if (step instanceof DrivingRouteLine.DrivingStep) {
-            nodeLocation = ((DrivingRouteLine.DrivingStep) step).getEntrace().getLocation();
+            nodeLocation = ((DrivingRouteLine.DrivingStep) step).getEntrance().getLocation();
             nodeTitle = ((DrivingRouteLine.DrivingStep) step).getInstructions();
         } else if (step instanceof WalkingRouteLine.WalkingStep) {
-            nodeLocation = ((WalkingRouteLine.WalkingStep) step).getEntrace().getLocation();
+            nodeLocation = ((WalkingRouteLine.WalkingStep) step).getEntrance().getLocation();
             nodeTitle = ((WalkingRouteLine.WalkingStep) step).getInstructions();
         } else if (step instanceof TransitRouteLine.TransitStep) {
-            nodeLocation = ((TransitRouteLine.TransitStep) step).getEntrace().getLocation();
+            nodeLocation = ((TransitRouteLine.TransitStep) step).getEntrance().getLocation();
             nodeTitle = ((TransitRouteLine.TransitStep) step).getInstructions();
         }
 		showRouteNodeInfo(nodeLocation, nodeTitle);
@@ -285,8 +287,8 @@ public class EBaiduMapRoutePlanSearch implements OnGetRoutePlanResultListener {
 	}
 	
 	private void jsonRouteResultCallback(SearchResult result) {
-		EBaiduMapBaseActivity activity;
-		activity = (EBaiduMapBaseActivity) mContext;
+		EBaiduMapBaseFragment activity;
+		activity = baseFragment;
 		if (activity != null) {
 			int resultId = -1;
 			switch (result.error) {
@@ -321,5 +323,10 @@ public class EBaiduMapRoutePlanSearch implements OnGetRoutePlanResultListener {
 					+ resultId + ");}";
 			uexBaiduMap.onCallback(js);
 		}
+	}
+
+	@Override
+	public void onGetBikingRouteResult(BikingRouteResult arg0) {
+		
 	}
 }

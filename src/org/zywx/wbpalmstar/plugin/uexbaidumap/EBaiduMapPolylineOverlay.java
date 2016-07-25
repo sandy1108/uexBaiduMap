@@ -1,14 +1,12 @@
 package org.zywx.wbpalmstar.plugin.uexbaidumap;
 
-import android.content.Context;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Polyline;
 
 public class EBaiduMapPolylineOverlay extends EBaiduMapOverlay {
 
 	private Polyline polyline = null;
-	public EBaiduMapPolylineOverlay(String id, Context context,
+	public EBaiduMapPolylineOverlay(String id, EBaiduMapBaseFragment context,
 			BaiduMap baiduMap) {
 		super(id, context, baiduMap);
 	}

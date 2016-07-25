@@ -5,16 +5,20 @@ dependencies {
 }
 
 android {
-//    signingConfigs {
-//        config {
-//            keyAlias 'appcandevelop'
-//            keyPassword '3g2win.com'
-//            storeFile file('E:/djf/work/Key相关/1019-com.appcan.develop/AppcanDevelop.keystore')
-//            storePassword '3g2win.com'
-//        }
-//    }
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    signingConfigs {
+        config {
+            keyAlias 'appcandevelop'
+            keyPassword '3g2win.com'
+            storeFile file('AppcanDevelop.keystore')
+            storePassword '3g2win.com'
+        }
+    }
+    compileSdkVersion 22
+    buildToolsVersion "23.0.0"
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -43,13 +47,16 @@ android {
         abortOnError false
     }
     defaultConfig {
-//        signingConfig signingConfigs.config
+        signingConfig signingConfigs.config
     }
     productFlavors {
     }
     buildTypes {
         debug {
-//            signingConfig signingConfigs.config
+            signingConfig signingConfigs.config
+        }
+        release {
+            signingConfig signingConfigs.config
         }
     }
 }

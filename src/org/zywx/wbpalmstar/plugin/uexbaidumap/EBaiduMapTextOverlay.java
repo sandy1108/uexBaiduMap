@@ -1,7 +1,5 @@
 package org.zywx.wbpalmstar.plugin.uexbaidumap;
 
-import android.content.Context;
-
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.Text;
 
@@ -9,7 +7,7 @@ public class EBaiduMapTextOverlay extends EBaiduMapOverlay {
 
 	private Text text = null;
 	
-	public EBaiduMapTextOverlay(String id, Context context, BaiduMap baiduMap) {
+	public EBaiduMapTextOverlay(String id, EBaiduMapBaseFragment context, BaiduMap baiduMap) {
 		super(id, context, baiduMap);
 	}
 

@@ -1,6 +1,5 @@
 package org.zywx.wbpalmstar.plugin.uexbaidumap;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,9 @@ public class EBaiduMapMarkerOverlay extends EBaiduMapOverlay implements OnInfoWi
 	private InfoWindow mInfoWindow = null;
 	private String bubbleTitleStr = null;
 	private final int bubbleDefaultYOffset = -75;
+
 	
-	
-	public EBaiduMapMarkerOverlay(String id, Context context, BaiduMap baiduMap) {
+	public EBaiduMapMarkerOverlay(String id, EBaiduMapBaseFragment context, BaiduMap baiduMap) {
 		
 		super(id, context, baiduMap);
 
@@ -39,6 +38,7 @@ public class EBaiduMapMarkerOverlay extends EBaiduMapOverlay implements OnInfoWi
 		return mMarker;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setBubbleViewData(String title, String subTitlte, String imgPath, int yOffset, boolean isUseYOffset) {
 		
 		Button bubbleBtn;
@@ -122,11 +122,10 @@ public class EBaiduMapMarkerOverlay extends EBaiduMapOverlay implements OnInfoWi
 
 	@Override
 	public void onInfoWindowClick() {
-		// TODO Auto-generated method stub
 		
-		EBaiduMapBaseActivity activity = (EBaiduMapBaseActivity)mContext;
+		EBaiduMapBaseFragment activity = mBaseFragment;
 		
-		if (activity != null && activity instanceof EBaiduMapBaseActivity) {
+		if (activity != null && activity instanceof EBaiduMapBaseFragment) {
 			
 			EUExBaiduMap uexBaiduMap = activity.getUexBaseObj();
 			
